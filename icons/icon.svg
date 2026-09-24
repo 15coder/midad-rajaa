@@ -1,0 +1,59 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#007AFF"/>
+      <stop offset="50%" style="stop-color:#5E5CE6"/>
+      <stop offset="100%" style="stop-color:#BF5AF2"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
+  
+  <!-- Brain body left half (pink) -->
+  <ellipse cx="220" cy="200" rx="80" ry="90" fill="#F4A5B8" opacity="0.9"/>
+  <!-- Brain body right half (blue) -->
+  <ellipse cx="300" cy="200" rx="80" ry="90" fill="#A5B8D4" opacity="0.9"/>
+  
+  <!-- Brain wrinkles -->
+  <path d="M160 180 Q200 160 240 180" stroke="#E8789A" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M160 200 Q200 185 245 200" stroke="#E8789A" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M270 180 Q310 160 355 180" stroke="#8FA5C4" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M268 200 Q310 185 355 200" stroke="#8FA5C4" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Center line -->
+  <line x1="256" y1="120" x2="256" y2="285" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="220" cy="230" r="22" fill="white"/>
+  <circle cx="295" cy="230" r="22" fill="white"/>
+  <circle cx="220" cy="233" r="14" fill="#1a3a6b"/>
+  <circle cx="295" cy="233" r="14" fill="#1a3a6b"/>
+  <circle cx="225" cy="228" r="5" fill="white"/>
+  <circle cx="300" cy="228" r="5" fill="white"/>
+  
+  <!-- Book (dark navy) -->
+  <rect x="155" y="265" width="100" height="70" rx="4" fill="#0f2460" transform="rotate(-3 205 300)"/>
+  <rect x="255" y="265" width="100" height="70" rx="4" fill="#1a3a8c" transform="rotate(3 305 300)"/>
+  <!-- Book spine -->
+  <rect x="248" y="260" width="14" height="78" rx="4" fill="#0d1f50"/>
+  <!-- Book pages shimmer -->
+  <rect x="160" y="268" width="90" height="60" rx="2" fill="white" opacity="0.05" transform="rotate(-3 205 298)"/>
+  <rect x="258" y="268" width="90" height="60" rx="2" fill="white" opacity="0.05" transform="rotate(3 305 298)"/>
+  
+  <!-- Text: مداد -->
+  <text x="256" y="390" font-family="Arial, sans-serif" font-size="72" font-weight="bold" 
+        text-anchor="middle" fill="url(#accent)" direction="rtl">مداد</text>
+  <!-- Text: للمعرفة والتعلم -->
+  <text x="256" y="435" font-family="Arial, sans-serif" font-size="30" 
+        text-anchor="middle" fill="rgba(255,255,255,0.6)" direction="rtl">للمعرفة والتعلم</text>
+  
+  <!-- Sparkles -->
+  <circle cx="130" cy="150" r="6" fill="#FFD60A" opacity="0.8"/>
+  <circle cx="380" cy="140" r="4" fill="#5AC8FA" opacity="0.7"/>
+  <circle cx="110" cy="260" r="3" fill="#BF5AF2" opacity="0.6"/>
+  <circle cx="400" cy="250" r="5" fill="#FF375F" opacity="0.5"/>
+</svg>

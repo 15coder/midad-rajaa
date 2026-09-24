@@ -84,6 +84,17 @@ body {
 
 :root[data-theme="light"] .bg-orbs { opacity: 0.55; }
 
+:root[data-theme="light"] .glass-card {
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-theme="light"] .glass-card::before,
+:root[data-theme="light"] .glass-card::after {
+  display: none;
+}
+
 :root[data-theme="light"] .nav {
   background: rgba(255, 255, 255, 0.86);
   border-color: rgba(37, 55, 85, 0.1);

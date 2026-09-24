@@ -7,6 +7,7 @@
 /* ── Telegram Config ─────────────────────────────────────── */
 const TG_USERNAME = 'Rv9_h';
 const TG_CHAT_LINK = `https://t.me/${TG_USERNAME}`;
+const THEME_PREFERENCE_KEY = 'mdad-theme';
 
 /* ── Service Worker Registration ─────────────────────────── */
 if ('serviceWorker' in navigator) {
@@ -19,6 +20,7 @@ if ('serviceWorker' in navigator) {
 
 /* ── DOM Ready ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initNavigation();
   initDeadlineField();
   initTypeChips();
@@ -30,6 +32,77 @@ document.addEventListener('DOMContentLoaded', () => {
   initHaptics();
   initAnimations();
 });
+
+/* ── Appearance ──────────────────────────────────────────── */
+function initTheme() {
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const label = document.getElementById('themeToggleLabel');
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const statusBarMetas = document.querySelectorAll('meta[name="apple-mobile-web-app-status-bar-style"]');
+  const systemPreference = window.matchMedia('(prefers-color-scheme: light)');
+
+  const getSavedTheme = () => {
+    try {
+      return localStorage.getItem(THEME_PREFERENCE_KEY);
+    } catch {
+      return null;
+    }
+  };
+  let hasManualChoice = Boolean(getSavedTheme());
+
+  const applyTheme = (theme, persist = false) => {
+    const isLight = theme === 'light';
+    root.dataset.theme = isLight ? 'light' : 'dark';
+    root.style.colorScheme = isLight ? 'light' : 'dark';
+
+    if (toggle) {
+      const nextModeLabel = isLight ? 'الوضع الداكن' : 'الوضع الفاتح';
+      toggle.setAttribute('aria-label', `التبديل إلى ${nextModeLabel}`);
+      toggle.title = `التبديل إلى ${nextModeLabel}`;
+      if (label) label.textContent = nextModeLabel;
+    }
+
+    if (themeColor) themeColor.content = isLight ? '#f4f7fc' : '#0a0a0f';
+    statusBarMetas.forEach(meta => {
+      meta.content = isLight ? 'default' : 'black-translucent';
+    });
+
+    if (persist) {
+      try {
+        localStorage.setItem(THEME_PREFERENCE_KEY, isLight ? 'light' : 'dark');
+      } catch (error) {
+        console.warn('Theme preference could not be saved.', error);
+      }
+    }
+  };
+
+  applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+
+  toggle?.addEventListener('click', () => {
+    hasManualChoice = true;
+    applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light', true);
+  });
+
+  const syncWithSystem = () => {
+    if (!hasManualChoice) applyTheme(systemPreference.matches ? 'light' : 'dark');
+  };
+
+  if (systemPreference.addEventListener) {
+    systemPreference.addEventListener('change', syncWithSystem);
+  } else {
+    systemPreference.addListener(syncWithSystem);
+  }
+
+  window.addEventListener('storage', event => {
+    if (event.key !== THEME_PREFERENCE_KEY) return;
+    hasManualChoice = event.newValue === 'light' || event.newValue === 'dark';
+    const nextTheme = event.newValue === 'light' || event.newValue === 'dark'
+      ? event.newValue
+      : systemPreference.matches ? 'light' : 'dark';
+    applyTheme(nextTheme);
+  });
+}
 
 /* ── Navigation ──────────────────────────────────────────── */
 function initNavigation() {

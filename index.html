@@ -49,6 +49,29 @@
   <!-- PWA -->
   <link rel="manifest" href="./manifest.json" />
   <meta name="theme-color" content="#007AFF" />
+  <script>
+    (() => {
+      let savedTheme = null;
+      try {
+        savedTheme = localStorage.getItem('mdad-theme');
+      } catch {
+        // Use the system preference when browser storage is unavailable.
+      }
+
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const theme = savedTheme === 'light' || savedTheme === 'dark'
+        ? savedTheme
+        : prefersLight ? 'light' : 'dark';
+
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      if (themeColor) themeColor.content = theme === 'light' ? '#f4f7fc' : '#0a0a0f';
+      document.querySelectorAll('meta[name="apple-mobile-web-app-status-bar-style"]').forEach(meta => {
+        meta.content = theme === 'light' ? 'default' : 'black-translucent';
+      });
+    })();
+  </script>
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -66,6 +89,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/theme.css" />
 </head>
 <body>
 
@@ -105,6 +129,20 @@
     <span>تثبيت</span>
   </button>
 </nav>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="التبديل إلى الوضع الفاتح" title="التبديل إلى الوضع الفاتح">
+  <span class="theme-toggle-icon" aria-hidden="true">
+    <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+    </svg>
+    <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"></path>
+      <path d="m16.8 4.5.5 1.4 1.4.5-1.4.5-.5 1.4-.5-1.4-1.4-.5 1.4-.5.5-1.4Z"></path>
+    </svg>
+  </span>
+  <span class="theme-toggle-label" id="themeToggleLabel">الوضع الفاتح</span>
+</button>
 
 <!-- ══════════════════════════════════════════════════════
      PAGE: HOME
